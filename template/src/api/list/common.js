@@ -8,14 +8,12 @@ import Api from '../axios'
 
 const apiURL = {
   // 提交表单信息
-  submitForm: 'v1/submit-form'
-  // 获取生成及大怒
-  // getStatus: 'v1/get-status'
+  getJson: 'package.json'
 }
 
 export default {
-  submitForm (obj) {
-    return Api.post(apiURL.submitForm, obj)
+  getJson (obj) {
+    return Api.post(apiURL.getJson, obj)
   }
   // getStatus () {
   //   return Api.get(apiURL.getStatus)

@@ -22,6 +22,14 @@ export default [
     }
   },
   {
+    title: 'life cycle',
+    path: '/life-cycle',
+    name: name.helloWorld,
+    component: (resolve) => {
+      require(['pages/life-cycle'], resolve)
+    }
+  },
+  {
     title: '示例axios',
     path: '/guide-axios',
     name: name.guideRouter,
