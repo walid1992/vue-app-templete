@@ -3,33 +3,26 @@
 <template src="./template.html"></template>
 
 <script>
-  export default {
-    data () {
-      return {
-        data: {}
-      }
-    },
-
-    mounted () {
-      this.loadData()
-    },
-
-    methods: {
-      loadData () {
-        this.$api.common.submitForm()
-          .then(res => {
-            this.data = res
-            this.$message({
-              message: res.msg
-            })
-          })
-          .catch(error => {
-            this.$message({
-              message: error.msg,
-              type: 'error'
-            })
-          })
-      }
+export default {
+  data() {
+    return {
+      data: {}
+    }
+  },
+  mounted() {
+    this.loadData()
+  },
+  methods: {
+    loadData() {
+      this.$api.common.getJson()
+        .then(res => {
+          this.data = res
+          console.log(res)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
+}
 </script>

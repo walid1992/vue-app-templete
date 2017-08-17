@@ -6,6 +6,7 @@
 
 export default {
   helloWorld: 'helloWorld',
+  lifeCycle: 'lifeCycle',
   guideAxios: 'guideAxios',
   guideStore: 'guideStore',
   guideRouter: 'guideRouter',
