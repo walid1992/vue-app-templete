@@ -15,7 +15,4 @@ export default {
   getJson (obj) {
     return Api.post(apiURL.getJson, obj)
   }
-  // getStatus () {
-  //   return Api.get(apiURL.getStatus)
-  // }
 }
