@@ -8,11 +8,12 @@
 export default {
   data() {
     return {
-      content: 'hello world'
+      ['cont' + 'ent']: 'hello world'
     }
   },
   methods: {
     onClick() {
+      console.log(Number.parseInt('12.34'))
       console.log('onClick')
     }
   }
