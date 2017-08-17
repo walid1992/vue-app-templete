@@ -1,34 +1,64 @@
+<style>
+  html, body {
+    background-color: #fff;
+    margin: 0;
+    height: 100%;
+    position: relative;
+  }
+
+  a, button, input, optgroup, select, textarea {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+
+  #app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+  }
+</style>
+
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    {{#router}}
-    <router-view></router-view>
-    {{else}}
-    <hello></hello>
-    {{/router}}
+    <transition name="fade" mode="out-in" class="router-content">
+      <router-view/>
+    </transition>
+    <!-- 转场加载动画 -->
+    <vue-progress-bar/>
   </div>
 </template>
 
 <script>
-{{#unless router}}
-import Hello from './components/Hello'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+  export default {
+    created () {
+      // 当App.vue首次加载进度条开始
+      this.$Progress.start()
+      // 钩进度条开始之前router-view移动
+      this.$router.beforeEach((to, from, next) => {
+        // 设置转场参数
+        this.$Progress.parseMeta({
+          func: [
+            {call: 'color', modifier: 'temp', argument: '#00bf11'},
+            {call: 'fail', modifier: 'temp', argument: '#00bf11'},
+            {call: 'location', modifier: 'temp', argument: 'top'},
+            {call: 'transition', modifier: 'temp', argument: {speed: '1.0s', opacity: '0.2s'}}
+          ]
+        })
+        // 启动动画
+        this.$Progress.start()
+        // 跳转目标路由
+        next()
+      })
+      // 路由进度条完成后完成router-view移动
+      this.$router.afterEach((to, from) => {
+        this.$Progress.finish()
+      })
+    },
 
-{{/unless}}
-export default {
-  name: 'app'{{#router}}{{#if_eq lintConfig "airbnb"}},{{/if_eq}}{{else}},
-  components: {
-    Hello{{#if_eq lintConfig "airbnb"}},{{/if_eq}}
-  }{{#if_eq lintConfig "airbnb"}},{{/if_eq}}{{/router}}
-}{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
+    mounted () {
+      // 当App.vue完成加载关闭进度条
+      this.$Progress.finish()
+    }
+  }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
